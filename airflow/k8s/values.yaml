@@ -1,0 +1,41 @@
+images:
+  airflow:
+    repository: apache/airflow
+    tag: 2.8.1
+
+executor: KubernetesExecutor
+
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/cityho/quant_flow
+    branch: main
+    subPath: airflow/dags
+    depth: 1
+    rev: HEAD
+
+webserver:
+  defaultUser:
+    enabled: true
+    username: admin
+    password: admin
+
+config:
+  AIRFLOW__CORE__FERNET_KEY:
+    value: "3BdzsB_ugXKoueFSeJWPugzuX1D8h-pnsYMz-9UvjUQ="
+  AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION:
+    value: "False"
+  AIRFLOW__WEBSERVER__EXPOSE_CONFIG:
+    value: "True"
+
+logs:
+  persistence:
+    enabled: false
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
